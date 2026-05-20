@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Caleb's Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0F0F0F;
+  --bg2: #161616;
+  --surface: #1C1C1C;
+  --border: #2A2A2A;
+  --border-hover: #444;
+  --text-primary: #EDEBE6;
+  --text-secondary: #8A8880;
+  --text-muted: #555350;
+  --accent-work: #C9A96E;
+  --accent-work-dim: rgba(201,169,110,0.12);
+  --accent-church: #7A9E8E;
+  --accent-church-dim: rgba(122,158,142,0.12);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+  padding: 0 0 4rem;
+}
+
+/* NOISE OVERLAY */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 0; opacity: 0.6;
+}
+
+/* HEADER */
+header {
+  padding: 3.5rem 2rem 2.5rem;
+  border-bottom: 1px solid var(--border);
+  position: relative; z-index: 1;
+}
+.header-inner { max-width: 720px; margin: 0 auto; }
+.header-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+h1 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+h1 span {
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--accent-work), #E8C88A);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.header-sub {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 0.6rem;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* MAIN */
+main { max-width: 720px; margin: 0 auto; padding: 2.5rem 2rem 0; position: relative; z-index: 1; }
+
+/* SECTION */
+.section { margin-bottom: 2.75rem; }
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.1rem;
+}
+.section-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  flex-shrink: 0;
+}
+.section-dot.work { background: var(--accent-work); box-shadow: 0 0 8px var(--accent-work); }
+.section-dot.church { background: var(--accent-church); box-shadow: 0 0 8px var(--accent-church); }
+.section-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.section-line { flex: 1; height: 1px; background: var(--border); }
+
+/* CARDS */
+.cards { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.15rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  border-radius: 10px 0 0 10px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.card.work::before { background: var(--accent-work); }
+.card.church::before { background: var(--accent-church); }
+.card:hover { border-color: var(--border-hover); transform: translateX(3px); }
+.card.work:hover { background: color-mix(in srgb, var(--surface) 85%, var(--accent-work) 15%); }
+.card.church:hover { background: color-mix(in srgb, var(--surface) 85%, var(--accent-church) 15%); }
+.card:hover::before { opacity: 1; }
+
+.card-icon {
+  width: 38px; height: 38px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+.card.work .card-icon { background: var(--accent-work-dim); }
+.card.church .card-icon { background: var(--accent-church-dim); }
+
+.card-body { flex: 1; min-width: 0; }
+.card-title {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.card-url {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.64rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-arrow {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: color 0.2s, transform 0.15s;
+}
+.card:hover .card-arrow { transform: translateX(3px); }
+.card.work:hover .card-arrow { color: var(--accent-work); }
+.card.church:hover .card-arrow { color: var(--accent-church); }
+
+/* FOOTER */
+footer {
+  max-width: 720px; margin: 0 auto;
+  padding: 0 2rem;
+  position: relative; z-index: 1;
+}
+.footer-inner {
+  border-top: 1px solid var(--border);
+  padding-top: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.footer-text {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+.footer-count {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+header { animation: fadeUp 0.5s ease both; }
+.section:nth-child(1) { animation: fadeUp 0.5s 0.1s ease both; }
+.section:nth-child(2) { animation: fadeUp 0.5s 0.2s ease both; }
+footer { animation: fadeUp 0.5s 0.3s ease both; }
+
+@media (max-width: 480px) {
+  header { padding: 2.5rem 1.25rem 2rem; }
+  main { padding: 2rem 1.25rem 0; }
+  footer { padding: 0 1.25rem; }
+  .card-url { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-label">Portal · calebkkmin</div>
+    <h1>My <span>Links</span></h1>
+    <div class="header-sub">github.io / 자주 쓰는 페이지 모음</div>
+  </div>
+</header>
+
+<main>
+
+  <!-- 업무 섹션 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-dot work"></div>
+      <span class="section-title">Work · 업무</span>
+      <div class="section-line"></div>
+    </div>
+    <div class="cards" id="workCards">
+      <a class="card work" href="https://calebkkmin.github.io/economics-glossary/" target="_blank">
+        <div class="card-icon">📖</div>
+        <div class="card-body">
+          <div class="card-title">경제용어 사전</div>
+          <div class="card-url">calebkkmin.github.io/economics-glossary</div>
+        </div>
+        <span class="card-arrow">→</span>
+      </a>
+      <a class="card work" href="https://calebkkmin.github.io/fed-chairs/" target="_blank">
+        <div class="card-icon">🏛️</div>
+        <div class="card-body">
+          <div class="card-title">미국 연방준비제도 의장 아카이브</div>
+          <div class="card-url">calebkkmin.github.io/fed-chairs</div>
+        </div>
+        <span class="card-arrow">→</span>
+      </a>
+      <a class="card work" href="https://calebkkmin.github.io/report-search/" target="_blank">
+        <div class="card-icon">🔍</div>
+        <div class="card-body">
+          <div class="card-title">수시보고서·연구용역 리스트 검색</div>
+          <div class="card-url">calebkkmin.github.io/report-search</div>
+        </div>
+        <span class="card-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- 교회 섹션 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-dot church"></div>
+      <span class="section-title">Church · 교회</span>
+      <div class="section-line"></div>
+    </div>
+    <div class="cards" id="churchCards">
+      <a class="card church" href="https://calebkkmin.github.io/ctest003_lookup/" target="_blank">
+        <div class="card-icon">✈️</div>
+        <div class="card-body">
+          <div class="card-title">2026 일본청년봉사단</div>
+          <div class="card-url">calebkkmin.github.io/ctest003_lookup</div>
+        </div>
+        <span class="card-arrow">→</span>
+      </a>
+      <a class="card church" href="https://calebkkmin.github.io/newfamily-lookup/" target="_blank">
+        <div class="card-icon">🤝</div>
+        <div class="card-body">
+          <div class="card-title">53청년부 새가족 조회 시스템</div>
+          <div class="card-url">calebkkmin.github.io/newfamily-lookup</div>
+        </div>
+        <span class="card-arrow">→</span>
+      </a>
+      <a class="card church" href="https://calebkkmin.github.io/group53-list/" target="_blank">
+        <div class="card-icon">📋</div>
+        <div class="card-body">
+          <div class="card-title">2026년 청년 53교구 순별 조회</div>
+          <div class="card-url">calebkkmin.github.io/group53-list</div>
+        </div>
+        <span class="card-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-text">calebkkmin · GitHub Pages</span>
+    <span class="footer-count" id="totalCount">총 6개 페이지</span>
+  </div>
+</footer>
+
+</body>
+</html>
